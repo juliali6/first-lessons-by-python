@@ -28,10 +28,26 @@ def guess_number_game():
         error_numbers += 1
 
 
-def main():
-    """Функция вызова всех данных функций."""
+def decorator(func):
+    """Функция декоратора.
+    Возвращает True, если в функции main не было ни одной ошибки
+    регистрации/авторизации"""
 
-    authenticator = Authenticator()
+    def wrapper():
+
+        while True:
+            if func():
+                break
+
+    return wrapper()
+
+
+authenticator = Authenticator()
+
+
+@decorator
+def main() -> bool:
+    """Функция вызова всех данных функций."""
 
     while True:
 
@@ -48,16 +64,16 @@ def main():
 
             except AuthorizationError as mistake:
                 print(mistake)
-                continue
+                return False
 
             try:
                 authenticator.registrate(login, password)
 
             except RegistrationError as mistake:
                 print(mistake)
-                continue
+                return False
 
-    guess_number_game()
+        guess_number_game()
 
 
 if __name__ == "__main__":
