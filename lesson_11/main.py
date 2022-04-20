@@ -1,7 +1,6 @@
 __author__ = "Юлия Кирик"
 
 
-import json
 from random import randint
 from authenticator import Authenticator
 from exceptions import AuthorizationError, RegistrationError

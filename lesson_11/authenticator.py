@@ -29,7 +29,7 @@ class Authenticator:
         return os.path.exists('auth.json')
 
 
-    def _read_auth_file(self):
+    def _read_auth_file(self) -> None:
         """Метод чтения и записи данных из файла."""
 
         with open("auth.json", "r") as f:
@@ -38,11 +38,11 @@ class Authenticator:
 
             self.login = read_file['login']
             self._password = read_file['password']
-            self.last_success_login_at = read_file['time_success_login']
+            self.last_success_login_at = datetime.fromisoformat(read_file['time_success_login'])
             self.errors_count = read_file['errors_count']
 
 
-    def _update_auth_file(self):
+    def _update_auth_file(self) -> None:
         """Метод перезаписи количества попыток авторизации и время авторизации."""
 
         creat_dict = {
@@ -73,7 +73,7 @@ class Authenticator:
 
         self.login = login
         self._password = password
-        self.last_success_login_at = datetime.utcnow()
+        self.last_success_login_at = datetime.utcnow().isoformat()
         self._update_auth_file()
 
 
